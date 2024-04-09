@@ -6,8 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
@@ -37,7 +39,10 @@ public class ContactService {
         /**
          * More information about Java Optional at https://tomgregory.com/gradle/java-optional/
          */
-        return contactRepo.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
+        // return contactRepo.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
+        //return contactRepo.findById(id).orElse(null);
+        return contactRepo.findById(id).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
     }
 
     public Contact createContact(Contact contact) {

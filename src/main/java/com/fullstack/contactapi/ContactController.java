@@ -61,4 +61,10 @@ public class ContactController {
     public byte[] getPhoto(@PathVariable String filename) throws IOException {
         return Files.readAllBytes(Paths.get(PHOTO_DIRECTORY + filename));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteContact(@PathVariable String id) {
+        contactService.deleteContact(contactService.getContact(id));
+        return ResponseEntity.noContent().build();
+    }
 }
