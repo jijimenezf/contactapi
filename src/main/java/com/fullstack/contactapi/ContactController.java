@@ -53,7 +53,7 @@ public class ContactController {
     }
 
     @PutMapping("/photo")
-    public ResponseEntity<String> uploadPhoto(@RequestParam String id, @RequestParam MultipartFile file) {
+    public ResponseEntity<String> uploadPhoto(@RequestParam("id") String id, @RequestParam("file")MultipartFile file) {
         return ResponseEntity.ok().body(contactService.uploadPhoto(id, file));
     }
 
