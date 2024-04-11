@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.net.URI;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -85,23 +86,21 @@ class ApplicationTests {
 
 	@Test
 	@DirtiesContext
-	void shouldDeleteAContact() throws Exception{
-		/*
-		Contact newContact = new Contact();
-		newContact.setName("Ozzy");
-		ResponseEntity<Void> response = restTemplate.postForEntity(BASE_URL, newContact, Void.class);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-		URI locationOfNewCashCard = response.getHeaders().getLocation();
-		int index = locationOfNewCashCard.toString().lastIndexOf("/");
-		String contactID = locationOfNewCashCard.toString().substring(index);
-		 */
-
-		ResponseEntity<Contact[]> response = restTemplate.getForEntity(BASE_URL, Contact[].class);
+	void shouldDeleteAContact() {
+		//ResponseEntity<Contact[]> response = restTemplate.getForEntity(BASE_URL, Contact[].class);
+		ResponseEntity<ContactResponse> response =
+				restTemplate.getForEntity(BASE_URL, ContactResponse.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		int results = response.getBody().length;
-		assertThat(results).isGreaterThan(0);
 
-		Contact deleteContact = response.getBody()[results - 1]; // Last Item
+		ContactResponse contactResponse = response.getBody();
+
+		List<Contact> contactList = contactResponse.getContactList();
+		assertThat(contactList).isNotEmpty();
+
+		int totalPages = contactResponse.getTotalPages();
+		assertThat(totalPages).isGreaterThan(1);
+
+		Contact deleteContact = contactList.get(contactList.size() - 1); // Last Item
 
 		ResponseEntity<Void> delResponse = restTemplate
 				.exchange(BASE_URL + "/" + deleteContact.getId(), HttpMethod.DELETE, null, Void.class);

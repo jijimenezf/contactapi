@@ -2,6 +2,7 @@ package com.fullstack.contactapi;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +30,14 @@ public class ContactController {
     }*/
 
     @GetMapping
-    public ResponseEntity<List<Contact>> getContacts(
+    public ResponseEntity<ContactResponse> getContacts(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
         Page<Contact> results = contactService.getAllContacts(page, size);
-        return ResponseEntity.ok(results.getContent());
+        List<Contact> contacts = results.getContent();
+        int pages = results.getTotalPages();
+        return new ResponseEntity<>(new ContactResponse(pages, contacts), HttpStatus.OK);
+        //return ResponseEntity.ok(results.getContent());
     }
 
     @GetMapping("/{id}")
