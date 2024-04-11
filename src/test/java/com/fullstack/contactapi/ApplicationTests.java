@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -33,8 +34,11 @@ class ApplicationTests {
 
 	@Test
 	void shouldReturnAPageOfContacts() {
+		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(BASE_URL)
+				.queryParam("page", 0)
+				.queryParam("size", 10);
 		ResponseEntity<String> response = restTemplate
-				.getForEntity(BASE_URL + "?page=0&size=1", String.class);
+				.getForEntity(uriBuilder.toUriString(), String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		/*DocumentContext documentContext = JsonPath.parse(response.getBody());
@@ -88,8 +92,13 @@ class ApplicationTests {
 	@DirtiesContext
 	void shouldDeleteAContact() {
 		//ResponseEntity<Contact[]> response = restTemplate.getForEntity(BASE_URL, Contact[].class);
+
+		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(BASE_URL)
+				.queryParam("page", 0)
+				.queryParam("size", 5);
+
 		ResponseEntity<ContactResponse> response =
-				restTemplate.getForEntity(BASE_URL, ContactResponse.class);
+				restTemplate.getForEntity(uriBuilder.toUriString(), ContactResponse.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		ContactResponse contactResponse = response.getBody();
