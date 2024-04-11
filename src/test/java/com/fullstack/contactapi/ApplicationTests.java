@@ -94,6 +94,7 @@ class ApplicationTests {
 
 		ContactResponse contactResponse = response.getBody();
 
+		assertThat(contactResponse).isNotNull();
 		List<Contact> contactList = contactResponse.getContactList();
 		assertThat(contactList).isNotEmpty();
 
