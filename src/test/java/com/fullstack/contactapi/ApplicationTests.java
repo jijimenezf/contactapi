@@ -63,11 +63,12 @@ class ApplicationTests {
 		newContact.setPhone("984-5789-6321");
 		newContact.setAddress("Los Angeles, CA");
 		newContact.setStatus("Active");
-		ResponseEntity<Void> response = restTemplate.postForEntity(BASE_URL, newContact, Void.class);
+		ResponseEntity<Contact> response = restTemplate.postForEntity(BASE_URL, newContact, Contact.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
-		URI locationOfNewCashCard = response.getHeaders().getLocation();
-		ResponseEntity<String> getResponse = restTemplate.getForEntity(locationOfNewCashCard, String.class);
+		Contact result = response.getBody();
+		assertThat(result).isNotNull();
+		ResponseEntity<String> getResponse = restTemplate.getForEntity(BASE_URL + "/" + result.getId(), String.class);
 		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 	}
 

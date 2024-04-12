@@ -50,10 +50,10 @@ public class ContactController {
     public ResponseEntity<Contact> createContact(@RequestBody Contact contact, UriComponentsBuilder ucb) {
         Contact result = contactService.createContact(contact);
         URI locationOfNew = ucb
-            .path("contacts/{id}")
-            .buildAndExpand(result.getId())
+            .path("contacts/id")
+            .buildAndExpand(result)
             .toUri();
-        return ResponseEntity.created(locationOfNew).build();
+        return ResponseEntity.created(locationOfNew).body(result);
     }
 
     @PutMapping("/photo")
