@@ -34,6 +34,9 @@ I made this contributions to the original idea:
 - Unit testing for uploading a file using Mockmvc
 - Code coverage using JaCoCo
 
+## Test Coverage
+![Alt text]([https://res.cloudinary.com/demo/image/upload/sample.jpg](https://asset.cloudinary.com/dzhfwgpoy/de4e4ed072b918ea073acd9ef4ba249e))
+
 ## Copyright
 
 Released under the Apache License 2.0. See the [LICENSE](https://github.com/codecentric/springboot-sample-app/blob/master/LICENSE) file.
