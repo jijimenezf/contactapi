@@ -35,7 +35,7 @@ I made this contributions to the original idea:
 - Code coverage using JaCoCo
 
 ## Test Coverage
-![Alt text]([https://res.cloudinary.com/demo/image/upload/sample.jpg](https://asset.cloudinary.com/dzhfwgpoy/de4e4ed072b918ea073acd9ef4ba249e))
+![Alt text](https://res.cloudinary.com/dzhfwgpoy/image/upload/v1713206450/coverage_zlqlwl.png))
 
 ## Copyright
 
